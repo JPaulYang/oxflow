@@ -1,0 +1,22 @@
+# Core (required)
+torch>=2.4
+torchvision>=0.19
+diffusers>=0.30
+numpy>=1.26
+scipy>=1.11
+POT>=0.9
+nibabel>=5.2
+tqdm>=4.66
+
+# Figures
+matplotlib>=3.8
+pillow>=10.0
+
+# Optional: SSIM/PSNR evaluation (script/eval/compare_ssim.py)
+scikit-image>=0.24
+
+# Optional: segmentation-based evaluation (script/eval/eval_segmentation_dice.py)
+# nnunetv2>=2.5
+
+# Optional: training-run logging (python -m src.train.train_controlnet_fm --wandb)
+# wandb

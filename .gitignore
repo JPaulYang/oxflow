@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+dist/
+build/
+venv/
+env/
+.ipynb_checkpoints/
+
+# Model weights and tensors
+*.pt
+*.pth
+*.ckpt
+ckpts/
+
+# Medical imaging data (never commit patient data)
+/data/
+/data_raw/
+/data_processed/
+/metadata/
+*.nii
+*.nii.gz
+*.dcm
+
+# Experiment outputs
+outputs/
+logs/
+runs/
+wandb/
+*.csv
+*.json
+*.png
+*.pdf
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store

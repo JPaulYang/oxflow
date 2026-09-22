@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "oxflow"
+version = "0.1.0"
+description = "Longitudinal CT tumor synthesis with optimal-transport mask interpolation and flow matching"
+requires-python = ">=3.10"
+license = "PolyForm-Noncommercial-1.0.0"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*"]
