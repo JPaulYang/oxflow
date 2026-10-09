@@ -1,0 +1,55 @@
+
+name: Sync upstream repository
+
+on:
+  schedule:
+    - cron: '23 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: upstream-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout target repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Sync from upstream
+        run: |
+          set -e
+
+          # Configure Git identity
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          # Add and fetch upstream repository
+          git remote add upstream https://github.com/JPaulYang/oxflow.git
+          git fetch upstream main
+
+          # Switch to target branch
+          git checkout main
+
+          # Check whether upstream is already synchronized
+          if git merge-base --is-ancestor upstream/main HEAD; then
+            echo "Already up to date. No changes needed."
+          else
+            echo "New upstream commits detected."
+
+            # Merge upstream changes
+            git merge --no-edit upstream/main
+
+            # Push changes to target repository
+            git push origin main
+
+            echo "Synchronization completed successfully."
+          fi
