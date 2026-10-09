@@ -15,31 +15,32 @@ concurrency:
 
 jobs:
   sync:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout target repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: main
           fetch-depth: 0
 
       - name: Sync from upstream
+        shell: bash
         run: |
-          set -e
+          set -euo pipefail
 
           # Configure Git identity
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          # Add and fetch upstream repository
+          # Fetch original repository
           git remote add upstream https://github.com/JPaulYang/oxflow.git
           git fetch upstream main
 
           # Switch to target branch
           git checkout main
 
-          # Check whether upstream is already synchronized
+          # Check for new upstream commits
           if git merge-base --is-ancestor upstream/main HEAD; then
             echo "Already up to date. No changes needed."
           else
@@ -48,7 +49,7 @@ jobs:
             # Merge upstream changes
             git merge --no-edit upstream/main
 
-            # Push changes to target repository
+            # Push updated target branch
             git push origin main
 
             echo "Synchronization completed successfully."
